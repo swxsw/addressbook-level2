@@ -56,3 +56,15 @@ public class Address {
         return isPrivate;
     }
 }
+
+Class Block{
+}
+
+Class Street{
+}
+
+CLass Unit{
+}
+
+Class PostalCode{
+}
