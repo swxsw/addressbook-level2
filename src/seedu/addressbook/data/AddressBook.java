@@ -5,7 +5,9 @@ import seedu.addressbook.data.person.UniquePersonList.*;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.data.tag.UniqueTagList.*;
 import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,6 +24,8 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
+    
+    private final ArrayList<Tagging> taggingList;
 
     /**
      * Creates an empty address book.
@@ -29,6 +33,7 @@ public class AddressBook {
     public AddressBook() {
         allPersons = new UniquePersonList();
         allTags = new UniqueTagList();
+        this.taggingList = new ArrayList<Tagging>();
     }
 
     /**
@@ -41,6 +46,7 @@ public class AddressBook {
     public AddressBook(UniquePersonList persons, UniqueTagList tags) {
         this.allPersons = new UniquePersonList(persons);
         this.allTags = new UniqueTagList(tags);
+        this.taggingList = new ArrayList<Tagging>();
         for (Person p : allPersons) {
             syncTagsWithMasterList(p);
         }
@@ -79,6 +85,12 @@ public class AddressBook {
     public void addPerson(Person toAdd) throws DuplicatePersonException {
         syncTagsWithMasterList(toAdd);
         allPersons.add(toAdd);
+        for(Person p : allPersons){
+            UniqueTagList currentPersonTags = p.getTags();
+            for(Tag t : currentPersonTags){
+                this.taggingList.add(new Tagging("+", p, t));
+            }
+        }
     }
 
     /**
@@ -111,6 +123,10 @@ public class AddressBook {
      */
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
+        UniqueTagList currentPersonTags = toRemove.getTags();
+        for(Tag t : currentPersonTags){
+            this.taggingList.add(new Tagging("-", (Person) toRemove, t));
+        }
     }
 
     /**
