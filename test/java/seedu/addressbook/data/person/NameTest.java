@@ -11,12 +11,21 @@ public class NameTest {
     
 
     @Test
-    public void testIsSimilar_nullGiven_expectsError() throws IllegalValueException{
+    public void testIsSimilar_nullGiven_expectsFalse() throws IllegalValueException{
         
         Name testName = new Name("Tim");
         Name testNameTwo = null;
         
         assertFalse(testName.isSimilar(testNameTwo));
+    }
+    
+    @Test
+    public void testIsSimilar_sameInputsGiven_expectsTrue() throws IllegalValueException{
+        
+        Name testName = new Name("Tim");
+        Name testNameTwo = new Name("Tim");
+        
+        assertTrue(testName.isSimilar(testNameTwo));
     }
 
 }
