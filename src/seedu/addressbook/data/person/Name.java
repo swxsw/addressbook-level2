@@ -69,7 +69,7 @@ public class Name {
          if(other == null){
              return false;
          } else {
-             return this.equals(other);
+             return this.fullName.toLowerCase().equals(((Name) other).fullName.toLowerCase());
          }
      }
 
