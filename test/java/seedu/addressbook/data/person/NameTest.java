@@ -27,5 +27,14 @@ public class NameTest {
         
         assertTrue(testName.isSimilar(testNameTwo));
     }
+    
+    @Test
+    public void testIsSimilar_differentInputsGiven_expectsFalse() throws IllegalValueException{
+        
+        Name testName = new Name("Tim");
+        Name testNameTwo = new Name("Time");
+        
+        assertFalse(testName.isSimilar(testNameTwo));
+    }
 
 }
